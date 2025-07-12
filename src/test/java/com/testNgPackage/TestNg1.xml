@@ -1,0 +1,15 @@
+<!--<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >-->
+<suite name="ListenerExecution">
+    <listeners>
+        <listener class-name = "com.testNgPackage.TestNGListener"></listener>
+    </listeners>
+
+
+    <test name="ExecutingListeners">
+        <classes>
+            <class name="com.testNgPackage.TestClasses"></class>
+        </classes>
+    </test>
+
+
+</suite>

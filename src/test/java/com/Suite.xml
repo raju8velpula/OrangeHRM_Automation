@@ -1,0 +1,12 @@
+<suite name="parentsuite">
+
+    <listeners>
+        <listener class-name="com.testNgPackage.SuiteListener"></listener>
+        <listener class-name="com.testNgPackage.ExecutionListener"></listener>
+    </listeners>
+
+    <suite-files>
+        <suite-file path="testNgPackage/TestNg1.xml"> </suite-file>
+        <suite-file path="testNgPackage/TestNg.xml"> </suite-file>
+    </suite-files>
+</suite>
