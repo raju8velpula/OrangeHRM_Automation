@@ -4,16 +4,17 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.stepDefinitions.Hooks;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class WebUtility extends  GenericUtility{
@@ -48,18 +49,23 @@ public class WebUtility extends  GenericUtility{
 //        driver.close();
     }
 
-    public void launchApplication() throws IOException {
-        driver.get(readProperty("appUrl"));
-        GlobalVariables.logger.log(Status.INFO, "Application "+readProperty("appUrl")+" launched successfully");
-    }
-    public boolean enterTextIntoTextbox(String locator, String textToEnter){
+    public boolean launchApplication() throws IOException {
+        try {
+            driver.get(readProperty("appUrl"));
+            return true;
+        } catch (Exception e) {
+            addFailureToReport(e.getMessage());
+            return false;
+
+        }
+        }
+    public boolean enterTextIntoTextbox(String locator, String textToEnter) throws IOException {
        try {
            WebElement element = getElement(locator);
            element.sendKeys(textToEnter);
            return true;
        } catch (Exception e) {
-
-            GlobalVariables.logger.log(Status.FAIL, e.getMessage());
+           addFailureToReport(e.getMessage());
            return false;
        }
     }
@@ -94,6 +100,13 @@ public class WebUtility extends  GenericUtility{
 
         }
         Assert.assertEquals(true, flag);
+    }
+
+    public void addFailureToReport(String message) throws IOException {
+        File sourcePath = ((TakesScreenshot) WebUtility.driver).getScreenshotAs(OutputType.FILE);
+        File destFile=new File("./Reports/sreenshot" + Math.random()+".png");
+        FileUtils.copyFile(sourcePath,destFile );
+        GlobalVariables.logger.log(Status.PASS, message).addScreenCaptureFromPath(destFile.getAbsolutePath());
     }
 
 }

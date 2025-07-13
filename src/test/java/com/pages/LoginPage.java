@@ -23,7 +23,8 @@ public class LoginPage extends  WebUtility{
  String passwordTxtByCSS="css==[name='password']";
  String signinBtnByXpath="xpath==//button[@type='submit']";
     public void loginToApplication(String userName, String password) throws IOException {
-        launchApplication();
+        boolean launchAppFlag=launchApplication();
+        asertData(launchAppFlag, "Launch application");
         boolean flag= enterTextIntoTextbox(userNameTxtByName,userName);
         asertData(flag, "entering text into username test box");
         enterTextIntoTextbox(passwordTxtByCSS, password);

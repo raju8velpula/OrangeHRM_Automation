@@ -2,6 +2,7 @@ package com.stepDefinitions;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.winUtils.GenericUtility;
@@ -11,8 +12,12 @@ import io.appium.java_client.windows.WindowsDriver;
 import io.cucumber.core.backend.StepDefinition;
 import io.cucumber.core.gherkin.Step;
 import io.cucumber.java.*;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -72,9 +77,17 @@ public class Hooks extends GenericUtility {
     }
 
     @AfterStep
-    public void afterStep(Scenario scenario) {
+    public void afterStep(Scenario scenario) throws IOException {
         WindowUtility.logger = extentTest;
         WebUtility.logger = origextentTest;
+        if (scenario.isFailed()) {
+            // Capture screenshot
+            File sourcePath = ((TakesScreenshot) WebUtility.driver).getScreenshotAs(OutputType.FILE);
+            byte[] fileContent = FileUtils.readFileToByteArray(sourcePath);
+            extentTest.log(Status.FAIL, "").addScreenCaptureFromPath(sourcePath.getPath());
+            // Attach screenshot to report
+            scenario.attach(fileContent, "image/png", "image");
+        }
     }
 
     @After
