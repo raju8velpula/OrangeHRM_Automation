@@ -46,7 +46,7 @@ public class WebUtility extends  GenericUtility{
     }
 
     public void closeBrowser(){
-//        driver.close();
+        driver.close();
     }
 
     public boolean launchApplication() throws IOException {
@@ -97,14 +97,13 @@ public class WebUtility extends  GenericUtility{
             GlobalVariables.logger.log(Status.PASS, message+" is successful");
         }else{
             GlobalVariables.logger.log(Status.FAIL,message+" is failed" );
-
         }
         Assert.assertEquals(true, flag);
     }
 
     public void addFailureToReport(String message) throws IOException {
         File sourcePath = ((TakesScreenshot) WebUtility.driver).getScreenshotAs(OutputType.FILE);
-        File destFile=new File("./Reports/sreenshot" + Math.random()+".png");
+        File destFile=new File("./Reports/Errors/sreenshot" + Math.random()+".png");
         FileUtils.copyFile(sourcePath,destFile );
         GlobalVariables.logger.log(Status.PASS, message).addScreenCaptureFromPath(destFile.getAbsolutePath());
     }

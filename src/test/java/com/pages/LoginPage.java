@@ -19,7 +19,7 @@ import static com.winUtils.GenericUtility.readProperty;
 
 public class LoginPage extends  WebUtility{
  static WebDriver driver= WebUtility.driver;
- String userNameTxtByName="name==us`rname";
+ String userNameTxtByName="name==username";
  String passwordTxtByCSS="css==[name='password']";
  String signinBtnByXpath="xpath==//button[@type='submit']";
     public void loginToApplication(String userName, String password) throws IOException {

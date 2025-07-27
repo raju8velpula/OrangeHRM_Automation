@@ -5,12 +5,10 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.utils.RepotsUtility;
 import com.winUtils.GenericUtility;
 import com.winUtils.WebUtility;
 import com.winUtils.WindowUtility;
-import io.appium.java_client.windows.WindowsDriver;
-import io.cucumber.core.backend.StepDefinition;
-import io.cucumber.core.gherkin.Step;
 import io.cucumber.java.*;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -19,6 +17,13 @@ import org.openqa.selenium.WebDriver;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Hooks extends GenericUtility {
@@ -33,7 +38,7 @@ public class Hooks extends GenericUtility {
     int threadID = 0;
     WebUtility webUtility;
     static ExtentTest origextentTest;
-
+    static String filePath;
     public Hooks() {
         if (scenarios == null) scenarios = new LinkedHashMap<Integer, String>();
         if (steps == null) steps = new HashMap<Integer, String>();
@@ -48,7 +53,26 @@ public class Hooks extends GenericUtility {
 
     @BeforeAll
     public static void beforeAll() throws IOException {
-        extentSparkReporter = new ExtentSparkReporter(System.getProperty("user.dir") + "/Reports/extentReport.html");
+        Date date = new Date();
+        DateFormat df = new SimpleDateFormat("MM-dd-yyyy");
+        String day = df.format(date);
+        File reportsDir = new File("./Reports");
+        File[] listOfFiles = reportsDir.listFiles();
+        assert listOfFiles != null;
+        for (File oneFile : listOfFiles) {
+            if (oneFile.isFile()) {
+                String folderName = "";
+                folderName = oneFile.getName().split("_")[1].split(" ")[0];
+                new File("./Reports/" + folderName).mkdir();
+                Path source = Paths.get(oneFile.getPath());
+                Path target = Paths.get("./Reports/" + folderName + "/" + oneFile.getName());
+                Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
+            }
+        }
+        String currentTime = String.valueOf(new Timestamp(new Date().getTime()));
+        currentTime = currentTime.split("[.]")[0].replace(":", "");
+         filePath=System.getProperty("user.dir") + "/Reports/ExecutionReport_" + currentTime + ".html";
+        extentSparkReporter = new ExtentSparkReporter(filePath);
         extentReports = new ExtentReports();
         extentReports.attachReporter(extentSparkReporter);
         extentSparkReporter.config().setDocumentTitle("Simple Automation Report");
@@ -105,5 +129,6 @@ public class Hooks extends GenericUtility {
             WebUtility webUtil = new WebUtility();
             webUtil.closeBrowser();
         }
+        new RepotsUtility().reportProperties(filePath);
     }
 }
