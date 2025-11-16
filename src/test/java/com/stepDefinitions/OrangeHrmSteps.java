@@ -1,9 +1,7 @@
 package com.stepDefinitions;
 
-import com.aventstack.extentreports.ExtentTest;
 import com.pages.LoginPage;
 import com.winUtils.GlobalVariables;
-import com.winUtils.WebUtility;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
