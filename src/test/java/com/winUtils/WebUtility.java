@@ -45,8 +45,9 @@ public class WebUtility extends  GenericUtility{
         }
     }
 
-    public void closeBrowser(){
-        driver.close();
+    public void closeBrowser() throws InterruptedException {
+        Thread.sleep(500);
+        driver.quit();
     }
 
     public boolean launchApplication() throws IOException {

@@ -115,7 +115,7 @@ public class Hooks extends GenericUtility {
     }
 
     @After
-    public void after() throws IOException {
+    public void after() throws IOException, InterruptedException {
         webUtil = new WebUtility();
         if (readProperty("runEachTestInNewBrowser").equalsIgnoreCase("true")) {
             webUtil.closeBrowser();
@@ -123,7 +123,7 @@ public class Hooks extends GenericUtility {
     }
 
     @AfterAll
-    public static void afterAll() throws IOException {
+    public static void afterAll() throws IOException, InterruptedException {
         extentReports.flush();
         if (!readProperty("runEachTestInNewBrowser").equalsIgnoreCase("true")) {
             WebUtility webUtil = new WebUtility();
