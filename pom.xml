@@ -13,6 +13,7 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<argLine>-Duser.language=en</argLine>
+		<cucumber.version>7.19.0</cucumber.version>
 
 	</properties>
 
@@ -89,6 +90,30 @@
 			<artifactId>cucumber-junit</artifactId>
 			<version>7.30.0</version>
 			<scope>test</scope>
+		</dependency>
+
+
+		<!-- trial-->
+
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit-platform-engine</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-launcher</artifactId>
+			<version>6.0.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.22</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
