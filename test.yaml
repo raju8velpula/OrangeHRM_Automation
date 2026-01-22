@@ -1,0 +1,5 @@
+Definition: Pipeline from SCM
+SCM: Git
+Repository URL: https://github.com/<org>/<repo>.git
+Branch Specifier: */master
+Script Path: Jenkinsfile
