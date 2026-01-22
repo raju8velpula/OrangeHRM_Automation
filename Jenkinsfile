@@ -3,7 +3,8 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps {
+            steps { 
+                
                 git 'https://github.com/your-repo.git'
             }
         }
