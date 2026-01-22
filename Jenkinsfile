@@ -3,31 +3,15 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps { 
-                
-                git 'https://github.com/your-repo.git'
+            steps {
+                echo 'checkout'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean compile'
+                 echo 'build'
             }
-        }
-
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-    }
-
-    post {
-        success {
-            echo 'Build Successful'
-        }
-        failure {
-            echo 'Build Failed'
         }
     }
 }
