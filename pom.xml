@@ -14,7 +14,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<argLine>-Duser.language=en</argLine>
 		<cucumber.version>7.19.0</cucumber.version>
-
 	</properties>
 
 	<dependencies>
