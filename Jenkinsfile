@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Building..."
+               mvn install
             }
         }
         stage('Test') {
