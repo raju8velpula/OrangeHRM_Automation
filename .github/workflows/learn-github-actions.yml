@@ -1,7 +1,7 @@
 name: learn-github-actions
 run-name: worker1
 on: 
-   workflow_dispatch:
+   workflow_dispatch: ispatch:
     inputs:
       BRANCH:
         type: string
