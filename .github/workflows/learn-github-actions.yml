@@ -1,8 +1,38 @@
 name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
-on: [push]
-env:
-  cloud: google-cloud
+run-name: worker1
+on: 
+   workflow_dispatch:
+    inputs:
+      BRANCH:
+        type: string
+        description: 'enter branch name'
+        required: false
+        default: "master"
+      TAG:
+        type: string
+        description: tag
+        required: true
+        default: "TC_"
+      JIRA_VERSION:
+        type: string
+        description: 'enter JIRA Version'
+        required: false
+      ADDTCTOTESTSET:
+        type: boolean
+        description: add test cases to test set
+        required: false
+        default: false
+      RUNFAILED:
+        type: boolean
+        description: run FAILED cases
+        required: false
+        default: false
+      RUNNORUN:
+        type: boolean
+        description: run NO RUN cases
+        required: false
+        default: false
+
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest
