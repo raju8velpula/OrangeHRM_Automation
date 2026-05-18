@@ -1,41 +1,13 @@
-name: learn-github-actions
-run-name: worker1
-on: 
-   workflow_dispatch:
-    inputs:
-      BRANCH:
-        type: string
-        description: 'enter branch name'
-        required: false
-        default: "master"
-      TAG:
-        type: string
-        description: tag
-        required: true
-        default: "TC_"
-      JIRA_VERSION:
-        type: string
-        description: 'enter JIRA Version'
-        required: false
-      ADDTCTOTESTSET:
-        type: boolean
-        description: add test cases to test set
-        required: false
-        default: false
-      RUNFAILED:
-        type: boolean
-        description: run FAILED cases
-        required: false
-        default: false
-      RUNNORUN:
-        type: boolean
-        description: run NO RUN cases
-        required: false
-        default: false
-
 jobs:
-  check-bats-version:
-    runs-on: ubuntu-latest
+  test:
+    runs-on: self-hosted
+
     steps:
-      - name: my test
-        run: mvn test
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget gnupg2
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google.list
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
