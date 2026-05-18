@@ -1,13 +1,16 @@
+
 jobs:
   test:
     runs-on: self-hosted
 
     steps:
-      - name: Install Chrome
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget gnupg2
-          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google.list
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
+      - uses: actions/checkout@v3
+
+      - name: Check Chrome
+        run: google-chrome --version
+
+      - name: Check ChromeDriver
+        run: chromedriver --version
+
+      - name: Build & Run Tests
+        run: mvn clean test
